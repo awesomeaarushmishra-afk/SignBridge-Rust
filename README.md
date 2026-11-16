@@ -169,3 +169,44 @@ npx --yes tsx --test src/utils/*.test.ts
 # 3. Windows desktop offline acceptance & frozen path resolution tests (8 tests)
 python3 -m unittest discover -s desktop_windows/tests -v
 ```
+---
+
+## Known Failure Modes (and how the system handles them)
+
+We tested on 26 self-collected on-the-spot inputs. SignBridge passed 26/26 automated verification checks, but live signing exposed real failure modes. We report them here rather than hiding them, because a prototype that fails loudly is safer than one that guesses silently.
+
+### 1. Closed-fist letters (E, N, M, S) are the hardest case
+
+**What happens:** E is sometimes rejected (confidence < 0.80) or swaps with N. M, N and S occasionally interchange under dim light.
+
+**Why:** A, E, M, N, S and T are the *same macro-shape* — a closed fist. What separates them is **thumb position** and **how far the fingers curl**, a difference of a few millimetres in landmark space. The thumb is **self-occluded** (tucked *behind* the curled fingers), so MediaPipe — which estimates 21 landmarks from a single RGB frame — has to *infer* it rather than see it. Depth (`z`) is a monocular estimate, not a measurement, and it degrades exactly when fingers curl toward the palm, because that motion is along the camera axis. Small landmark noise then flips the winning template, and low light (`meanLuma < 48`) compounds it by blurring the thumb/finger boundary.
+
+**What SignBridge does instead:** Rejects the frame rather than typing the wrong letter. The `exp(-0.22 × minAnatDist)` penalty pushes ambiguous handshapes below the 0.80 gate, the motion gate blocks frames with `Δmotion > 0.045` ("Hold sign steady"), and the low-light gate stops tracking below `meanLuma` 48 ("Lighting too low"). The text box stays directly editable by keyboard.
+
+**Next step:** Temporal smoothing — a rolling window or majority vote across 5–8 frames — so a single glitched frame cannot pull down an otherwise correct sign.
+
+### 2. Frame-level landmark glitches on correct signs
+
+**What happens:** A correct sign is sometimes rejected mid-gesture.
+
+**Why:** Per-frame hand landmark detection degrades when the hand briefly leaves frame, moves fast (motion blur), fingers occlude each other, or lighting changes suddenly. A single low-confidence frame can pull down the aggregate score.
+
+**What SignBridge does instead:** The 5-frame `SignBuffer` debounce (~330 ms at 15 FPS) means one bad frame cannot commit a letter; it must be sustained.
+
+**Next step:** Same temporal smoothing fix, plus a "hold steady" countdown in the UI.
+
+### 3. Transitional frames between closed-fist letters
+
+**What happens:** Moving from one closed-fist letter to another passes through shapes matching *neither* template.
+
+**Why:** Fingerspelling transitions are not discrete; the intermediate pose is genuinely ambiguous.
+
+**What SignBridge does instead:** No letter is emitted until 5 consecutive stable frames agree, and word boundaries require >500 ms of hand absence — so transitions never type garbage.
+
+### Known non-failures
+
+Left-handed signing is **not** a failure mode: the classifier computes both direct and X-mirrored distances across all 26 templates, so left and right hands score symmetrically.
+
+See [Baseline.md](Baseline.md) for the full baseline comparison (17/26 standalone vs 26/26 integrated) and measurement methodology.
+
+---
