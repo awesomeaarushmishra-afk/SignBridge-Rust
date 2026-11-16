@@ -11,9 +11,6 @@ Deaf and hard-of-hearing people routinely face situations where no interpreter i
 
 **Our own idea.** We did not follow a suggested project. SignBridge is built around a shared `NormalizedIR` pivot — 16 spoken languages, Grade-1 Braille (Unicode + ASCII BRF), ITU Morse (visual + PCM WAV), and ASL fingerspelling all convert through one intermediate representation, giving 16 modal directions instead of pairwise converters. On top of that we built: mirror-invariant `[f32; 63]` landmark normalization (left and right hands score identically), a softmax + absolute-distance confidence gate at 0.80, a 5-frame debounce with automatic word boundaries, pre-flight RAM validation and tiered model routing for 8 GB laptops, and deterministic sub-millisecond Braille/Morse codecs that never hallucinate dot patterns. Evaluated on 26 self-collected inputs: 17/26 for the standalone baseline, 26/26 for the integrated system.
 
----
-# SignBridge Offline — Multi-Modal Accessibility Translator
-
 **SignBridge Offline** is a bidirectional, offline-first accessibility translator uniting **Spoken Languages (16 languages)**, **Grade-1 Braille (Unicode + ASCII `.brf`)**, **ITU Morse Code (Visual + 22.05 kHz PCM `.wav`)**, and **ASL Sign Language (21-landmark local MediaPipe hand tracking + 2D skeletal fingerspelling avatar)** through a single **Normalized Intermediate Representation (`NormalizedIR`)**.
 
 The repository includes:
