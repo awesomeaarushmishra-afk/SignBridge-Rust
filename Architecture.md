@@ -51,7 +51,7 @@ SignBridge is founded on a **Dual-Pipeline Systems Accessibility Architecture** 
 │ 1. Offline Deterministic Engine (instant, 0 network):                        │
 │    offlineTranslator.ts / translator_core.py -> OFFLINE_PHRASEBOOK           │
 │ 2. Local GGUF Engine (Windows Desktop):                                      │
-│    LocalModelManager -> llama-cpp-python (Q4_K_M Gemma 4 / Qwen / Phi-4)     │
+│    LocalModelManager -> llama-cpp-python (Q4_K_M Gemma 4 / Phi-4-mini)       │
 │ 3. Optional Server AI Engine (Web Preview / Live API):                       │
 │    POST /api/translate -> LRU Cache -> gemini-4-hydrogen ->                  │
 │    gemini-3.1-flash-lite failover -> local OFFLINE_PHRASEBOOK JSON fallback  │
