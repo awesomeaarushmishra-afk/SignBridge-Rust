@@ -1,7 +1,7 @@
 # SignBridge Offline — Multi-Modal Accessibility Translator
 
 **Track:** Languages
-**Team:** [your names]
+**Team:** Aarush Mishra
 
 ## The problem
 
