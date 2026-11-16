@@ -31,9 +31,9 @@ Captured live, no network connection, on an 8 GB Windows laptop.
 |---|---|
 | ![Sign tracking with live confidence score](docs/screenshot-sign.png) | ![Grade-1 Braille output](docs/screenshot-braille.png) |
 
-| Morse output (visual + WAV) | Model manager + RAM check |
+| Morse output (visual + WAV) | Text to Morse |
 |---|---|
-| ![ITU Morse output and WAV export](docs/screenshot-morse.png) | ![Dual model manager with RAM validation](docs/screenshot-models.png) |
+| ![ITU Morse output and WAV export](docs/screenshot-morse.png) | ![Text in English to Morse via Visual and Audio](docs/screenshot-text.png) |
 
 ---
 
