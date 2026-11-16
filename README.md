@@ -29,11 +29,11 @@ Captured live, no network connection, on an 8 GB Windows laptop.
 
 | Sign tracking (letter + confidence) | Braille output (Unicode + BRF) |
 |---|---|
-| ![Sign tracking with live confidence score](docs/screenshot-sign.png) | ![Grade-1 Braille output](docs/screenshot-braille.png) |
+| ![Sign tracking with live confidence score](screenshot-sign.png) | ![Grade-1 Braille output](screenshot-braille.png) |
 
 | Morse output (visual + WAV) | Text to Morse |
 |---|---|
-| ![ITU Morse output and WAV export](docs/screenshot-morse.png) | ![Text in English to Morse via Visual and Audio](docs/screenshot-text.png) |
+| ![ITU Morse output and WAV export](screenshot-morse.png) | ![Text in English to Morse via Visual and Audio](screenshot-text.png) |
 
 ---
 
