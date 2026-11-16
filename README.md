@@ -13,7 +13,7 @@ See [SOURCES.md](SOURCES.md) for all models, libraries and AI tools used.
 
 ## Documentation Index
 - **[Architecture.md](Architecture.md)** — Complete deep-dive into the base Rust/SLT architecture, bidirectional `NormalizedIR` data flows, exact confidence-score equations, debouncing state machines, and dual-model routing.
-- **[Baseline.md](Baseline.md)** — Detailed comparison against standalone baselines (Gemma 4 E4B, Microsoft Phi-4 14B, and the `sign-language-translator` Python plugin) covering latency, RAM efficiency, confidence gating, and self-collected evaluation results.
+- **[Baseline.md](Baseline.md)** — Detailed comparison against standalone baselines (Gemma 4 E4B, Microsoft Phi-4-mini 3.8B, and the `sign-language-translator` Python plugin) covering latency, RAM efficiency, confidence gating, and self-collected evaluation results.
 - **[Requirements.md](Requirements.md)** — Hardware, RAM, disk, CPU/NPU, camera, and OS requirements for every model tier (from 4 GB SBCs and 8 GB laptops up to 16–32 GB workstations).
 - **[SOURCES.md](SOURCES.md)** — Exact citations, links, and licenses for every model, crate, Python/npm package, API, and evaluation input used.
 
@@ -129,7 +129,7 @@ For an **8 GB RAM Windows laptop** (recommended default):
 2. **Main Translation Model (`lightweight` for snappy 8 GB, or `balanced` for higher nuance)**:
    - Lightweight (recommended on 8 GB): `desktop_windows/models/gemma-4-e2b-q4_k_m.gguf` (~1.45 GB)
    - Balanced (tighter on 8 GB, ideal on 12–16 GB): `desktop_windows/models/gemma-4-e4b-q4_k_m.gguf` (~2.78 GB)
-   - Optional High-Reasoning (12–16 GB+ workstations): `microsoft/phi-4` Q4_K_M GGUF via `"customModelPath"` in `desktop_windows/models.json`.
+   - Optional Reasoning (fits 8 GB): `microsoft/Phi-4-mini-instruct` Q4_K_M GGUF (~2.3 GB) via `"customModelPath"` in `desktop_windows/models.json`. A full 14B-class Phi-4 (~8.4 GB) requires `>= 12–16 GB` RAM.
 
 Update `desktop_windows/models.json` to match your chosen presets (for 8 GB laptops, set `"activeAssistantTierId": "slm-fast"` and `"activeTierId": "lightweight"` or `"balanced"`).
 
@@ -169,6 +169,7 @@ npx --yes tsx --test src/utils/*.test.ts
 # 3. Windows desktop offline acceptance & frozen path resolution tests (8 tests)
 python3 -m unittest discover -s desktop_windows/tests -v
 ```
+
 ---
 
 ## Known Failure Modes (and how the system handles them)
@@ -208,5 +209,3 @@ We tested on 26 self-collected on-the-spot inputs. SignBridge passed 26/26 autom
 Left-handed signing is **not** a failure mode: the classifier computes both direct and X-mirrored distances across all 26 templates, so left and right hands score symmetrically.
 
 See [Baseline.md](Baseline.md) for the full baseline comparison (17/26 standalone vs 26/26 integrated) and measurement methodology.
-
----
