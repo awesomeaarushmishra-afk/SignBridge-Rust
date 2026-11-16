@@ -21,6 +21,21 @@ The repository includes:
 See [SOURCES.md](SOURCES.md) for all models, libraries and AI tools used.
 
 ---
+---
+
+## Screenshots
+
+Captured live, no network connection, on an 8 GB Windows laptop.
+
+| Sign tracking (letter + confidence) | Braille output (Unicode + BRF) |
+|---|---|
+| ![Sign tracking with live confidence score](docs/screenshot-sign.png) | ![Grade-1 Braille output](docs/screenshot-braille.png) |
+
+| Morse output (visual + WAV) | Model manager + RAM check |
+|---|---|
+| ![ITU Morse output and WAV export](docs/screenshot-morse.png) | ![Dual model manager with RAM validation](docs/screenshot-models.png) |
+
+---
 
 ## Documentation Index
 - **[Architecture.md](Architecture.md)** — Complete deep-dive into the base Rust/SLT architecture, bidirectional `NormalizedIR` data flows, exact confidence-score equations, debouncing state machines, and dual-model routing.
