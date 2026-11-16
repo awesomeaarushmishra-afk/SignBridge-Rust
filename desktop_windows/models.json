@@ -1,0 +1,100 @@
+{
+  "activeTierId": "balanced",
+  "activeAssistantTierId": "slm-fast",
+  "customModelPath": "models/custom-local-model.gguf",
+  "hostRamGb": 8,
+  "offlineOnlyMode": true,
+  "slmAvailable": true,
+  "installedModelIds": ["slm-fast", "lightweight", "balanced"],
+  "slmPresets": [
+    {
+      "id": "slm-fast",
+      "tierLabel": "Lightweight SLM",
+      "modelName": "Qwen 2.5 0.5B Instruct (Fast SLM)",
+      "family": "Qwen 2.5",
+      "quantization": "Q4_K_M",
+      "diskSizeGb": 0.42,
+      "minRamGb": 2,
+      "recommendedRamGb": 4,
+      "speedTradeoff": "Fastest (~115 tok/s CPU)",
+      "qualityTradeoff": "Instant UI & shortcut help",
+      "bundled": true,
+      "license": "Apache-2.0",
+      "modelFile": "models/qwen2.5-0.5b-instruct-q4_k_m.gguf"
+    },
+    {
+      "id": "slm-balanced",
+      "tierLabel": "Balanced SLM",
+      "modelName": "Gemma 4 E2B Instruct (Assistant)",
+      "family": "Gemma 4",
+      "quantization": "Q4_K_M",
+      "diskSizeGb": 1.45,
+      "minRamGb": 4,
+      "recommendedRamGb": 8,
+      "speedTradeoff": "Balanced (~48 tok/s CPU)",
+      "qualityTradeoff": "Step-by-step guidance & calibration tips",
+      "bundled": false,
+      "license": "Gemma Terms of Use",
+      "modelFile": "models/gemma-4-e2b-q4_k_m.gguf"
+    },
+    {
+      "id": "slm-reasoning",
+      "tierLabel": "Higher-Reasoning SLM",
+      "modelName": "Gemma 4 E4B Instruct (Reasoning)",
+      "family": "Gemma 4",
+      "quantization": "Q4_K_M",
+      "diskSizeGb": 2.78,
+      "minRamGb": 6,
+      "recommendedRamGb": 12,
+      "speedTradeoff": "Slower (~22 tok/s CPU)",
+      "qualityTradeoff": "Higher-reasoning workflow troubleshooting",
+      "bundled": false,
+      "license": "Gemma Terms of Use",
+      "modelFile": "models/gemma-4-e4b-q4_k_m.gguf"
+    }
+  ],
+  "presets": [
+    {
+      "id": "lightweight",
+      "tierLabel": "Lightweight",
+      "modelName": "Gemma 4 E2B Instruct",
+      "family": "Gemma 4",
+      "quantization": "Q4_K_M",
+      "diskSizeGb": 1.45,
+      "minRamGb": 4,
+      "recommendedRamGb": 4,
+      "contextLength": 512,
+      "bundled": true,
+      "license": "Gemma Terms of Use",
+      "modelFile": "models/gemma-4-e2b-q4_k_m.gguf"
+    },
+    {
+      "id": "balanced",
+      "tierLabel": "Balanced",
+      "modelName": "Gemma 4 E4B Instruct",
+      "family": "Gemma 4",
+      "quantization": "Q4_K_M",
+      "diskSizeGb": 2.78,
+      "minRamGb": 6,
+      "recommendedRamGb": 8,
+      "contextLength": 1024,
+      "bundled": true,
+      "license": "Gemma Terms of Use",
+      "modelFile": "models/gemma-4-e4b-q4_k_m.gguf"
+    },
+    {
+      "id": "high-quality",
+      "tierLabel": "High Quality",
+      "modelName": "Gemma 4 12B / Qwen 2.5 7B",
+      "family": "Gemma 4 / Qwen 2.5",
+      "quantization": "Q4_K_M",
+      "diskSizeGb": 6.40,
+      "minRamGb": 10,
+      "recommendedRamGb": 16,
+      "contextLength": 2048,
+      "bundled": false,
+      "license": "Gemma Terms / Apache-2.0",
+      "modelFile": "models/gemma-4-12b-q4_k_m.gguf"
+    }
+  ]
+}

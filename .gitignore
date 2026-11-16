@@ -1,0 +1,17 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+*.gguf
+desktop_windows/models/*.gguf
+desktop_windows/dist/
+desktop_windows/build/
+desktop_windows/.venv/
+__pycache__/
+*.pyc
+.playwright-cli/
+

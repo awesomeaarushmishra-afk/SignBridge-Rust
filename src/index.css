@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  :focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+}
+
+[data-high-contrast="true"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+[data-high-contrast="true"] .bg-white,
+[data-high-contrast="true"] .bg-white\/95,
+[data-high-contrast="true"] .bg-slate-50,
+[data-high-contrast="true"] .bg-slate-100 {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+}
+
+[data-high-contrast="true"] .text-slate-900,
+[data-high-contrast="true"] .text-slate-800,
+[data-high-contrast="true"] .text-slate-700 {
+  color: #ffffff !important;
+}
+
+[data-high-contrast="true"] .text-slate-600,
+[data-high-contrast="true"] .text-slate-500,
+[data-high-contrast="true"] .text-slate-400 {
+  color: #fde047 !important;
+}
+
+[data-high-contrast="true"] .border-slate-200,
+[data-high-contrast="true"] .border-slate-300,
+[data-high-contrast="true"] .border-slate-100 {
+  border-color: #ffffff !important;
+}
+
+[data-high-contrast="true"] .bg-blue-600 {
+  background-color: #38bdf8 !important;
+  color: #000000 !important;
+}
+
+[data-high-contrast="true"] .bg-slate-900 {
+  background-color: #fde047 !important;
+  color: #000000 !important;
+}
+
+[data-high-contrast="true"] .text-blue-700,
+[data-high-contrast="true"] .text-blue-600 {
+  color: #38bdf8 !important;
+}
+
+[data-high-contrast="true"] :focus-visible {
+  outline: 3px solid #fde047 !important;
+  outline-offset: 2px;
+}

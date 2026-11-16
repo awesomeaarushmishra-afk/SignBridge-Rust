@@ -1,0 +1,95 @@
+name: Build SignBridge Offline Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test-web-and-desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install web dependencies, lint, and build
+        run: |
+          npm install --no-audit --no-fund
+          npm run lint
+          npm run build
+
+      - name: Run TypeScript core logic tests
+        run: npx --yes tsx --test src/utils/*.test.ts
+
+      - name: Setup Python & run desktop offline unit tests
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Python acceptance tests
+        run: python -m unittest discover -s desktop_windows/tests -v
+
+  build-windows-exe:
+    needs: test-web-and-desktop
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12 (Windows x64)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install desktop dependencies & PyInstaller
+        working-directory: desktop_windows
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install --prefer-binary --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu "llama-cpp-python>=0.3.1"
+          pip install --prefer-binary -r requirements.txt
+
+      - name: Run Windows offline tests
+        working-directory: desktop_windows
+        run: python -m unittest discover -s tests -v
+
+      - name: Build portable SignBridgeOffline.exe
+        working-directory: desktop_windows
+        run: pyinstaller --clean --noconfirm signbridge.spec
+
+      - name: Build Inno Setup installer (if ISCC available)
+        working-directory: desktop_windows
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (Test-Path $iscc) {
+            & $iscc installer.iss
+          } else {
+            Write-Host "ISCC.exe not installed on runner; skipping Setup EXE."
+          }
+
+      - name: Package portable release folder (with models.json, models/ guide & docs)
+        working-directory: desktop_windows
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist\portable\models | Out-Null
+          Copy-Item dist\SignBridgeOffline.exe dist\portable\
+          if (Test-Path dist\SignBridgeOfflineSetup-x64.exe) {
+            Copy-Item dist\SignBridgeOfflineSetup-x64.exe dist\portable\
+          }
+          if (Test-Path models\README.txt) {
+            Copy-Item models\README.txt dist\portable\models\
+          }
+          Copy-Item models.json, README_WINDOWS.md, USER_GUIDE.md, MODEL_SWAPPING.md, SUPPORTED_STANDARDS.md dist\portable\
+
+      - name: Upload SignBridgeOffline.exe Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SignBridgeOffline-Windows-x64
+          path: desktop_windows/dist/portable/
+          retention-days: 30

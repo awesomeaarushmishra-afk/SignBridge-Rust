@@ -1,0 +1,6 @@
+{
+  "name": "SignBridge Rust — Multi-Modal Accessibility Pipeline",
+  "description": "Rust-based multi-modal accessibility workbench combining Braille/Morse decoding, MediaPipe sign language landmark extraction (Apache 2.0 sign-language-translator), Gemma 4 E4B on-device translation, and real-time TTS.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
