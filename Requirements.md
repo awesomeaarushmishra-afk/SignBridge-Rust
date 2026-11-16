@@ -1,6 +1,6 @@
 # Hardware & Software Requirements (`Requirements.md`)
 
-This document specifies the exact hardware, memory (RAM), storage, CPU/NPU, camera, audio, and software requirements needed to run **SignBridge Offline** across every supported local AI model tier—from lightweight 4 GB edge devices and **8 GB RAM laptops** up to 16–32 GB workstations running large reasoning models such as **Microsoft Phi-4 (14B)** or **Gemma 4 12B**.
+This document specifies the exact hardware, memory (RAM), storage, CPU/NPU, camera, audio, and software requirements needed to run **SignBridge Offline** across every supported local AI model tier — from lightweight 4 GB edge devices and **8 GB RAM laptops** up to 16–32 GB workstations running large reasoning models such as full **Microsoft Phi-4 (14B)** or **Gemma 4 12B**. The default supported reasoning tier is **Microsoft Phi-4-mini (3.8B)**, which fits comfortably on 8 GB.
 
 ---
 
@@ -22,7 +22,8 @@ This document specifies the exact hardware, memory (RAM), storage, CPU/NPU, came
 | **`lightweight`** *(Best for 8 GB)* | **Gemma 4 E2B Instruct** | `Q4_K_M` (GGUF) | **1.45 GB** | **4 GB** | **4–8 GB** | `512` | ~48 tok/s CPU | Best balance when running simultaneously with webcam MediaPipe |
 | **`balanced`** *(Default)* | **Gemma 4 E4B Instruct** | `Q4_K_M` (GGUF) | **2.78 GB** | **6 GB** | **8 GB** | `1024` | ~24 tok/s CPU / `145 ms` TTFT NPU | Close extra browser tabs if pairing with `slm-balanced` on 8 GB RAM |
 | **`high-quality`** | **Gemma 4 12B / Qwen 2.5 7B** | `Q4_K_M` (GGUF) | **4.7–6.4 GB** | **10 GB** | **16 GB** | `2048` | ~8–12 tok/s CPU | Triggers RAM warning below 10 GB host RAM |
-| **`custom` (Phi-4 14B)** | **Microsoft Phi-4 (14B)** | `Q4_K_M` (GGUF) | **~8.4 GB** *(28 GB FP16)* | **12 GB** | **16–32 GB** *(or 10+ GB VRAM GPU)* | `2048–4096` | ~5–10 tok/s CPU / ~45+ tok/s GPU | Exceeds 8 GB laptops; use dedicated GPU (`n_gpu_layers > 0`) or `>=16 GB` RAM |
+| **`custom` (Phi-4-mini 3.8B)** *(Default custom)* | **Microsoft Phi-4-mini (3.8B)** | `Q4_K_M` (GGUF) | **~2.3 GB** | **4 GB** | **8 GB** | `2048–4096` | ~20–30 tok/s CPU | Fits 8 GB laptops; stronger reasoning than Gemma 4 E2B without leaving the low-RAM budget |
+| **`custom` (Phi-4 14B)** *(High-RAM only)* | **Microsoft Phi-4 (14B)** | `Q4_K_M` (GGUF) | **~8.4 GB** *(28 GB FP16)* | **12 GB** | **16–32 GB** *(or 10+ GB VRAM GPU)* | `2048–4096` | ~5–10 tok/s CPU / ~45+ tok/s GPU | Exceeds 8 GB laptops; use dedicated GPU (`n_gpu_layers > 0`) or `>=16 GB` RAM |
 
 ### C. Vision, Speech & Audio Auxiliary Modules
 
@@ -60,7 +61,7 @@ This document specifies the exact hardware, memory (RAM), storage, CPU/NPU, came
 - **Free Disk Space**: 5 GB (10 GB if building `.exe` + Python `.venv`).
 
 ### Tier 3: **16 GB – 32 GB RAM Workstation / GPU PC (High-Reasoning Tier)**
-- **Recommended Pairing**: `slm-balanced` or `slm-reasoning` (`Gemma 4 E2B/E4B`) + **`Microsoft Phi-4 (14B, Q4_K_M)`** or **`Gemma 4 12B (Q4_K_M)`**.
+- **Recommended Pairing**: `slm-balanced` or `slm-reasoning` (`Gemma 4 E2B/E4B`) + **Phi-4-mini (3.8B)** for reasoning-heavy work, **or** a full **Phi-4 (14B)** / **Gemma 4 12B** if you have 16–32 GB RAM.
 - **GPU (Optional)**: NVIDIA RTX 3060 12 GB / 4070+ or Apple Silicon Unified Memory allows offloading all layers for **>40 tok/s** decode speed.
 - **Free Disk Space**: 20 GB.
 
